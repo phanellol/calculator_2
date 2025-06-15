@@ -52,11 +52,26 @@ const buttonContainer = document.createElement("div");
 buttonContainer.classList.add("buttonContainer");
 main?.appendChild(buttonContainer);
 
-const valueArray = ["1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "*", "C", "0", "=", "/"]
+const valueArray = ["1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "*", "С", "0", "=", "/"]
 
 for (let i = 0; i < valueArray.length; i++) {
     const numButton = document.createElement("button");
     numButton.classList.add("numButton");
+    numButton.classList.add(valueArray[i]);
     numButton.textContent = valueArray[i];
     buttonContainer.appendChild(numButton);
 }
+
+let firstInputValue;
+
+const allButtons = document.querySelectorAll(".numButton");
+
+allButtons.forEach(button => {
+    if (!isNaN(Number(button.textContent))) {
+        button.addEventListener("click", () => {
+            let buttonValue = button.textContent;
+            firstInputValue = input.value + buttonValue;
+            input.value = firstInputValue;
+        })
+    }
+});
