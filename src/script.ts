@@ -22,20 +22,16 @@ let numberOne: number;
 let numberTwo: number;
 let operator: string;
 
-function operate() {
+function operate(numberOne: number, numberTwo: number) {
     switch (operator) {
         case "+":
-            add(numberOne, numberTwo);
-            break;
+            return add(numberOne, numberTwo);
         case "-":
-            subtract(numberOne, numberTwo);
-            break;
+            return subtract(numberOne, numberTwo);
         case "*":
-            multiply(numberOne, numberTwo);
-            break;
+            return multiply(numberOne, numberTwo);
         case "/":
-            divide(numberOne, numberTwo);
-            break;
+            return divide(numberOne, numberTwo);
         default:
             alert("Wrong operator!");
     }
@@ -52,7 +48,7 @@ const buttonContainer = document.createElement("div");
 buttonContainer.classList.add("buttonContainer");
 main?.appendChild(buttonContainer);
 
-const valueArray = ["1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "*", "С", "0", "=", "/"]
+const valueArray = ["1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "*", "C", "0", "=", "/"]
 
 for (let i = 0; i < valueArray.length; i++) {
     const numButton = document.createElement("button");
@@ -62,7 +58,7 @@ for (let i = 0; i < valueArray.length; i++) {
     buttonContainer.appendChild(numButton);
 }
 
-let firstInputValue;
+let secondInputValue = "";
 
 const allButtons = document.querySelectorAll(".numButton");
 
@@ -70,8 +66,56 @@ allButtons.forEach(button => {
     if (!isNaN(Number(button.textContent))) {
         button.addEventListener("click", () => {
             let buttonValue = button.textContent;
-            firstInputValue = input.value + buttonValue;
-            input.value = firstInputValue;
+            input.value += buttonValue;
+            if (!operator) {
+                numberOne = parseInt(input.value);
+            } else {
+                secondInputValue += buttonValue;
+                input.value = numberOne + operator + secondInputValue;
+                numberTwo = parseInt(secondInputValue);
+            }
+        })
+    } else if (button.textContent === "+") {
+        button.addEventListener("click", () => {
+            let buttonValue = button.textContent;
+            input.value += buttonValue;
+            operator = "+";
+        })
+    } else if (button.textContent === "-") {
+        button.addEventListener("click", () => {
+            let buttonValue = button.textContent;
+            input.value += buttonValue;
+            operator = "-";
+        })
+    } else if (button.textContent === "*") {
+        button.addEventListener("click", () => {
+            let buttonValue = button.textContent;
+            input.value += buttonValue;
+            operator = "*";
+        })
+    } else if (button.textContent === "/") {
+        button.addEventListener("click", () => {
+            let buttonValue = button.textContent;
+            input.value += buttonValue;
+            operator = "/";
+        })
+    } else if (button.textContent === "=") {
+        button.addEventListener("click", () => {
+            if (numberOne === undefined || numberTwo === undefined) {
+                alert("Wrong!");
+                return;
+            } else {
+                let result = operate(numberOne, numberTwo);
+                input.value = result?.toString() || "Error";
+            }
+        })
+
+    } else if (button.textContent === "C") {
+        button.addEventListener("click", () => {
+            numberOne = 0;
+            numberTwo = 0;
+            input.value = "";
+            operator = "";
         })
     }
 });
