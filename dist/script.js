@@ -102,7 +102,11 @@ allButtons.forEach(button => {
             }
             else {
                 let result = operate(numberOne, numberTwo);
-                input.value = (result === null || result === void 0 ? void 0 : result.toString()) || "Error";
+                if (result !== undefined && result !== null) {
+                    return input.value = result.toString();
+                }
+                else
+                    "Error";
             }
         });
     }
@@ -112,6 +116,7 @@ allButtons.forEach(button => {
             numberTwo = 0;
             input.value = "";
             operator = "";
+            secondInputValue = "";
         });
     }
 });
