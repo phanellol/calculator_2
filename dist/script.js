@@ -68,41 +68,97 @@ allButtons.forEach(button => {
     }
     else if (button.textContent === "+") {
         button.addEventListener("click", () => {
-            let buttonValue = button.textContent;
-            input.value += buttonValue;
-            operator = "+";
+            if (!operator) {
+                let buttonValue = button.textContent;
+                input.value += buttonValue;
+                operator = "+";
+            }
+            else {
+                let result = operate(numberOne, numberTwo);
+                if (result !== undefined && result !== null) {
+                    secondInputValue = "";
+                    numberOne = result;
+                    operator = "+";
+                    return input.value = result.toString() + operator;
+                }
+                else
+                    "Error";
+            }
         });
     }
     else if (button.textContent === "-") {
         button.addEventListener("click", () => {
-            let buttonValue = button.textContent;
-            input.value += buttonValue;
-            operator = "-";
+            if (!operator) {
+                let buttonValue = button.textContent;
+                input.value += buttonValue;
+                operator = "-";
+            }
+            else {
+                let result = operate(numberOne, numberTwo);
+                if (result !== undefined && result !== null) {
+                    secondInputValue = "";
+                    numberOne = result;
+                    operator = "-";
+                    return input.value = result.toString() + operator;
+                }
+                else
+                    "Error";
+            }
         });
     }
     else if (button.textContent === "*") {
         button.addEventListener("click", () => {
-            let buttonValue = button.textContent;
-            input.value += buttonValue;
-            operator = "*";
+            if (!operator) {
+                let buttonValue = button.textContent;
+                input.value += buttonValue;
+                operator = "*";
+            }
+            else {
+                let result = operate(numberOne, numberTwo);
+                if (result !== undefined && result !== null) {
+                    secondInputValue = "";
+                    numberOne = result;
+                    operator = "*";
+                    return input.value = result.toString() + operator;
+                }
+                else
+                    "Error";
+            }
         });
     }
     else if (button.textContent === "/") {
         button.addEventListener("click", () => {
-            let buttonValue = button.textContent;
-            input.value += buttonValue;
-            operator = "/";
+            if (!operator) {
+                let buttonValue = button.textContent;
+                input.value += buttonValue;
+                operator = "/";
+            }
+            else {
+                let result = operate(numberOne, numberTwo);
+                if (result !== undefined && result !== null) {
+                    secondInputValue = "";
+                    numberOne = result;
+                    operator = "/";
+                    return input.value = result.toString() + operator;
+                }
+                else
+                    "Error";
+            }
         });
     }
     else if (button.textContent === "=") {
         button.addEventListener("click", () => {
-            if (numberOne === undefined || numberTwo === undefined) {
+            if (!numberOne || !numberTwo || !operator) {
                 alert("Wrong!");
                 return;
             }
             else {
                 let result = operate(numberOne, numberTwo);
                 if (result !== undefined && result !== null) {
+                    secondInputValue = "";
+                    operator = "";
+                    numberOne = result;
+                    numberTwo = 0;
                     return input.value = result.toString();
                 }
                 else
