@@ -18,9 +18,9 @@ function divide(x: number, y: number) {
     return result
 }
 
-let numberOne: number;
-let numberTwo: number;
-let operator: string;
+let numberOne: number = 0;
+let numberTwo: number = 0;
+let operator: string = "";
 
 function operate(numberOne: number, numberTwo: number) {
     switch (operator) {
@@ -49,6 +49,7 @@ buttonContainer.classList.add("buttonContainer");
 main?.appendChild(buttonContainer);
 
 const valueArray = ["1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "*", "C", "0", "=", "/"]
+const opArray = ["+", "-", "*", "/"];
 
 for (let i = 0; i < valueArray.length; i++) {
     const numButton = document.createElement("button");
@@ -63,90 +64,107 @@ let secondInputValue = "";
 const allButtons = document.querySelectorAll(".numButton");
 
 allButtons.forEach(button => {
-    if (!isNaN(Number(button.textContent))) {
+    const buttonText = button.textContent;
+    if (buttonText === null) return;
+
+    if (!isNaN(Number(buttonText))) {
         button.addEventListener("click", () => {
-            let buttonValue = button.textContent;
-            input.value += buttonValue;
+            input.value += buttonText;
             if (!operator) {
                 numberOne = parseInt(input.value);
             } else {
-                secondInputValue += buttonValue;
+                secondInputValue += buttonText;
                 input.value = numberOne + operator + secondInputValue;
                 numberTwo = parseInt(secondInputValue);
             }
         })
-    } else if (button.textContent === "+") {
+        // } else if (button.textContent === "+") {
+        //     button.addEventListener("click", () => {
+        //         if (!operator) {
+        //             let buttonValue = button.textContent;
+        //             input.value += buttonValue;
+        //             operator = "+";
+        //         } else {
+        //             let result = operate(numberOne, numberTwo);
+        //             if (result !== undefined && result !== null) {
+        //                 secondInputValue = "";
+        //                 numberOne = result;
+        //                 operator = "+";
+        //                 return input.value = result.toString() + operator;
+        //             } else "Error";
+
+        //         }
+        //     })
+        // } else if (button.textContent === "-") {
+        //     button.addEventListener("click", () => {
+        //         if (!operator) {
+        //             let buttonValue = button.textContent;
+        //             input.value += buttonValue;
+        //             operator = "-";
+        //         } else {
+        //             let result = operate(numberOne, numberTwo);
+        //             if (result !== undefined && result !== null) {
+        //                 secondInputValue = "";
+        //                 numberOne = result;
+        //                 operator = "-";
+        //                 return input.value = result.toString() + operator;
+        //             } else "Error";
+
+        //         }
+        //     })
+        // } else if (button.textContent === "*") {
+        //     button.addEventListener("click", () => {
+        //         if (!operator) {
+        //             let buttonValue = button.textContent;
+        //             input.value += buttonValue;
+        //             operator = "*";
+        //         } else {
+        //             let result = operate(numberOne, numberTwo);
+        //             if (result !== undefined && result !== null) {
+        //                 secondInputValue = "";
+        //                 numberOne = result;
+        //                 operator = "*";
+        //                 return input.value = result.toString() + operator;
+        //             } else "Error";
+
+        //         }
+        //     })
+        // } else if (button.textContent === "/") {
+        //     button.addEventListener("click", () => {
+        //         if (!operator) {
+        //             let buttonValue = button.textContent;
+        //             input.value += buttonValue;
+        //             operator = "/";
+        //         } else {
+        //             let result = operate(numberOne, numberTwo);
+        //             if (result !== undefined && result !== null) {
+        //                 secondInputValue = "";
+        //                 numberOne = result;
+        //                 operator = "/";
+        //                 return input.value = result.toString() + operator;
+        //             } else "Error";
+
+        //         }
+        //     })
+    } else if (opArray.includes(buttonText)) {
         button.addEventListener("click", () => {
             if (!operator) {
-                let buttonValue = button.textContent;
-                input.value += buttonValue;
-
-                operator = "+";
-            } else {
+                operator = buttonText;
+                input.value += operator;
+            } else if (operator) {
                 let result = operate(numberOne, numberTwo);
                 if (result !== undefined && result !== null) {
+                    operator = buttonText;
                     secondInputValue = "";
                     numberOne = result;
-                    operator = "+";
-                    return input.value = result.toString() + operator;
-                } else "Error";
-
+                    input.value = numberOne + operator;
+                }
             }
         })
-    } else if (button.textContent === "-") {
-        button.addEventListener("click", () => {
-            if (!operator) {
-                let buttonValue = button.textContent;
-                input.value += buttonValue;
-                operator = "-";
-            } else {
-                let result = operate(numberOne, numberTwo);
-                if (result !== undefined && result !== null) {
-                    secondInputValue = "";
-                    numberOne = result;
-                    operator = "-";
-                    return input.value = result.toString() + operator;
-                } else "Error";
 
-            }
-        })
-    } else if (button.textContent === "*") {
+    } else if (buttonText === "=") {
         button.addEventListener("click", () => {
-            if (!operator) {
-                let buttonValue = button.textContent;
-                input.value += buttonValue;
-                operator = "*";
-            } else {
-                let result = operate(numberOne, numberTwo);
-                if (result !== undefined && result !== null) {
-                    secondInputValue = "";
-                    numberOne = result;
-                    operator = "*";
-                    return input.value = result.toString() + operator;
-                } else "Error";
-
-            }
-        })
-    } else if (button.textContent === "/") {
-        button.addEventListener("click", () => {
-            if (!operator) {
-                let buttonValue = button.textContent;
-                input.value += buttonValue;
-                operator = "/";
-            } else {
-                let result = operate(numberOne, numberTwo);
-                if (result !== undefined && result !== null) {
-                    secondInputValue = "";
-                    numberOne = result;
-                    operator = "/";
-                    return input.value = result.toString() + operator;
-                } else "Error";
-
-            }
-        })
-    } else if (button.textContent === "=") {
-        button.addEventListener("click", () => {
-            if (!numberOne || !numberTwo || !operator) {
+            if (numberOne === undefined || numberTwo === undefined || !operator) {
                 alert("Wrong!");
                 return;
             } else {
@@ -157,12 +175,12 @@ allButtons.forEach(button => {
                     numberOne = result;
                     numberTwo = 0;
                     return input.value = result.toString();
-                } else "Error";
+                }
             }
         })
 
 
-    } else if (button.textContent === "C") {
+    } else if (buttonText === "C") {
         button.addEventListener("click", () => {
             numberOne = 0;
             numberTwo = 0;
