@@ -15,9 +15,9 @@ function divide(x, y) {
     let result = x / y;
     return result;
 }
-let numberOne = 0;
-let numberTwo = 0;
-let operator = "";
+let numberOne = undefined;
+let numberTwo = undefined;
+let operator = undefined;
 let newStartPoint = false;
 function operate(numberOne, numberTwo) {
     newStartPoint = true;
@@ -71,8 +71,9 @@ allButtons.forEach(button => {
                 input.value = buttonText;
                 newStartPoint = false;
             }
+            else
+                return "Wrong be";
         });
-        //Перенести запис числа1 в перевірку оператора. Щоб коли число1 !== undefined, то інпут видалявся, і писалось нове число, поки число1 пусте
     }
     else if (opArray.includes(buttonText)) {
         button.addEventListener("click", () => {
@@ -82,16 +83,24 @@ allButtons.forEach(button => {
                 input.value += operator;
             }
             else if (operator) {
-                let result = operate(numberOne, numberTwo);
-                if (result !== undefined && result !== null) {
+                if (numberTwo !== undefined) {
+                    let result = operate(numberOne, numberTwo);
+                    if (result !== undefined && result !== null) {
+                        operator = buttonText;
+                        secondInputValue = "";
+                        numberOne = result;
+                        numberTwo = undefined;
+                        input.value = numberOne + operator;
+                    }
+                }
+                else {
                     operator = buttonText;
-                    secondInputValue = "";
-                    numberOne = result;
-                    input.value = numberOne + operator;
+                    return input.value = numberOne + operator;
                 }
             }
+            else
+                return "Wrong sh";
         });
-        // Перенести оголошення числа1 перед 
     }
     else if (buttonText === "=") {
         button.addEventListener("click", () => {
@@ -103,9 +112,9 @@ allButtons.forEach(button => {
                 let result = operate(numberOne, numberTwo);
                 if (result !== undefined && result !== null) {
                     secondInputValue = "";
-                    operator = "";
-                    numberOne = 0;
-                    numberTwo = 0;
+                    operator = undefined;
+                    numberOne = undefined;
+                    numberTwo = undefined;
                     return input.value = result.toString();
                 }
             }
@@ -113,10 +122,10 @@ allButtons.forEach(button => {
     }
     else if (buttonText === "C") {
         button.addEventListener("click", () => {
-            numberOne = 0;
-            numberTwo = 0;
+            numberOne = undefined;
+            numberTwo = undefined;
             input.value = "";
-            operator = "";
+            operator = undefined;
             newStartPoint = false;
             secondInputValue = "";
         });
