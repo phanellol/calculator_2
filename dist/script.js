@@ -12,6 +12,10 @@ function multiply(x, y) {
     return result;
 }
 function divide(x, y) {
+    if (y === 0) {
+        alert("You cant did it, smarty");
+        return;
+    }
     let result = x / y;
     return result;
 }

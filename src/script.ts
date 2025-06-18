@@ -14,6 +14,10 @@ function multiply(x: number, y: number) {
 }
 
 function divide(x: number, y: number) {
+    if (y === 0) {
+        alert("You cant did it, smarty");
+        return
+    }
     let result = x / y;
     return result
 }
